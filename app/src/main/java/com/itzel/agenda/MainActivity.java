@@ -3,6 +3,7 @@ package com.itzel.agenda;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -40,6 +41,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setCheckedItem(R.id.nav_add_person);
+        replaceFragment(new AddUserFragment());
     }
 
     @Override
@@ -79,8 +82,31 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+
+        switch (id){
+
+            case R.id.nav_add_person:
+                replaceFragment(new AddUserFragment());
+                break;
+            case R.id.nav_consult:
+                replaceFragment(new ConsultFragment());
+                break;
+            case R.id.nav_edit:
+                replaceFragment(new EditarFragment());
+                break;
+            case R.id.nav_delete:
+                replaceFragment(new DeleteFragment());
+
+                break;
+        }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+     private void replaceFragment(Fragment fragment){
+         getSupportFragmentManager().beginTransaction().replace(R.id.content_main,fragment).commit();
+
+
+     }
 }
